@@ -7,8 +7,9 @@ import (
 	"github.com/kaspanet/kaspad/domain/consensus/utils/serialization"
 	"github.com/kaspanet/kaspad/util/difficulty"
 
-	"github.com/pkg/errors"
 	"math/big"
+
+	"github.com/pkg/errors"
 )
 
 // State is an intermediate data structure with pre-computed values to speed up mining.
@@ -34,6 +35,15 @@ func NewState(header externalapi.MutableBlockHeader) *State {
 
 	return &State{
 		Target:     *target,
+		prePowHash: *prePowHash,
+		mat:        *generateMatrix(prePowHash),
+		Timestamp:  timestamp,
+		Nonce:      nonce,
+	}
+}
+
+func NewStateFromSolution(prePowHash *externalapi.DomainHash, timestamp int64, nonce uint64) *State {
+	return &State{
 		prePowHash: *prePowHash,
 		mat:        *generateMatrix(prePowHash),
 		Timestamp:  timestamp,
