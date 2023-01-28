@@ -60,3 +60,6 @@ coverage.txt
 
 testdbs/
 coverage.tmp
+
+# macOS
+*.DS_Store
